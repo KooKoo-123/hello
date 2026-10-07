@@ -16,3 +16,7 @@ jobs:
     - name : 메이븐 빌드
       working-directory: ./hello
       run: mvn clean package
+
+    - name: 도커 이미지 빌드
+      working-directory: ./hello
+      run: docker build -t hello .
