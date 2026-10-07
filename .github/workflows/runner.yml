@@ -5,9 +5,6 @@ on:
     branches:
       - main
 
-env:
-  SERVER_IP: 13.210.186.99
-
 jobs:
   build-and-deploy:
     runs-on: [self-hosted, kosa-label]
@@ -15,6 +12,9 @@ jobs:
     steps:
       - name: 소스 체크아웃
         uses: actions/checkout@v4
+        
+      - name: hello 폴더 변경
+        run: cd hello
 
       - name: Java 설정
         uses: actions/setup-java@v4
@@ -24,7 +24,6 @@ jobs:
           cache: maven
 
       - name: Maven 빌드
-        working-directory: ./hello
         run: mvn clean package
 
       - name: Docker Hub 로그인
@@ -34,24 +33,14 @@ jobs:
           password: ${{ secrets.DOCKERHUB_TOKEN }}
 
       - name: Docker 이미지 빌드
-        working-directory: ./hello
         run: |
           docker build -t ${{secrets.DOCKERHUB_USERNAME}}/hello:latest .
 
       - name: Docker 이미지 Push
         run: docker push ${{ secrets.DOCKERHUB_USERNAME }}/hello:latest
 
-      - name: EC2에 배포
-        uses: appleboy/ssh-action@v1
-        env:
-          DOCKERHUB_USERNAME: ${{ secrets.DOCKERHUB_USERNAME }}
-          DOCKERHUB_TOKEN: ${{ secrets.DOCKERHUB_TOKEN }}
-        with:
-          host: ${{ env.SERVER_IP }}
-          username: ubuntu
-          key: ${{ secrets.SERVER_SSH_KEY }}
-          envs: DOCKERHUB_USERNAME,DOCKERHUB_TOKEN
-          script: |
+      - name: 배포
+        run: |
             echo "$DOCKERHUB_TOKEN" | docker login -u "$DOCKERHUB_USERNAME" --password-stdin
             docker pull "$DOCKERHUB_USERNAME/hello:latest"
             docker rm -f hello_app || true
