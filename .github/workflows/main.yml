@@ -3,7 +3,7 @@ name: 전자정부 프레임워크 빌드 및 배포
 on:
   push:
     branches:
-      - main
+      - empty
 
 jobs:
   build-and-deploy:
