@@ -36,7 +36,7 @@ jobs:
       - name: Docker 이미지 빌드
         working-directory: ./hello
         run: |
-          docker build -t ${{secrets.DOCKERHUB_USERNAME}}/hello:latest .
+          docker build -t ${{ secrets.DOCKERHUB_USERNAME }}/hello:latest .
 
       - name: Docker 이미지 Push
         run: docker push ${{ secrets.DOCKERHUB_USERNAME }}/hello:latest
@@ -55,4 +55,4 @@ jobs:
             echo "$DOCKERHUB_TOKEN" | sudo docker login -u "$DOCKERHUB_USERNAME" --password-stdin
             sudo docker pull "$DOCKERHUB_USERNAME/hello:latest"
             sudo docker rm -f hello_app || true
-            sudo docker run -d \--name hello_app \--restart unless-stopped \-p 80:8080 \"$DOCKERHUB_USERNAME/hello:latest"
+            sudo docker run -d --name hello_app --restart unless-stopped -p 8080:8080 "$DOCKERHUB_USERNAME/hello:latest"
