@@ -10,7 +10,7 @@ jobs:
     runs-on: [self-hosted, kosa-label]
 
     steps:
-      - name: 소스 체크아웃
+      - name: 소스 체크 아웃
         uses: actions/checkout@v4
         
       - name: hello 폴더 변경
