@@ -7,7 +7,7 @@ on:
 
 jobs:
   build-and-deploy:
-    runs-on: [self-hosted, kosa-label]
+    runs-on: [self-hosted, kosa_label]
 
     steps:
       - name: 소스 체크 아웃
