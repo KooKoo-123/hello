@@ -6,7 +6,7 @@ on:
       - main
 
 env:
-  SERVER_IP: 3.34.96.62
+  SERVER_IP: 13.210.186.99
 
 jobs:
   build-and-deploy:
