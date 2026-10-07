@@ -36,7 +36,7 @@ jobs:
       - name: Docker 이미지 빌드
         working-directory: ./hello
         run: |
-          docker build -t ${{secrets.DOCKER_USERNAME}}/hello:latest .
+          docker build -t ${{secrets.DOCKERHUB_USERNAME}}/hello:latest .
 
       - name: Docker 이미지 Push
         run: docker push ${{ secrets.DOCKERHUB_USERNAME }}/hello:latest
