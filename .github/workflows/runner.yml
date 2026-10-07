@@ -3,7 +3,7 @@ name: runner
 on:
   push:
     branches:
-      - empty
+      - main
 
 env:
   SERVER_IP: 13.210.186.99
